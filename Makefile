@@ -45,7 +45,7 @@ define run_cmake =
 	-DCMAKE_INSTALL_PREFIX=$(abspath $(INSTALL_PREFIX)) \
 	-DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
 	-DCMAKE_PREFIX_PATH=$(CURDIR)/infra/cmake \
-	-DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="./cmake/use-fetch-content.cmake" \
+    -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES="./cmake/use-fetch-content.cmake;infra/cmake/bemancmakeinstrumentation.cmake" \
 	$(_cmake_args) \
 	$(CURDIR)
 endef
@@ -85,10 +85,10 @@ clean-install:
 realclean: clean-install
 
 ctest: $(_build_path)/CMakeCache.txt ## Run CTest on current build
-	cd $(_build_path) && ctest --output-on-failure -C $(CONFIG)
+	cd $(_build_path) && ctest --parallel --output-on-failure -C $(CONFIG)
 
 ctest_ : compile
-	cd $(_build_path) && ctest --output-on-failure -C $(CONFIG)
+	cd $(_build_path) && ctest --parallel --output-on-failure -C $(CONFIG)
 
 test: ctest_ ## Rebuild and run tests
 

@@ -53,3 +53,21 @@ Some options for the project and target will also be supported:
 * `BEMAN_INSTALL_CONFIG_FILE_PACKAGES` - a list of package names (e.g., `beman.something`) for which to install the config file
   (default: all packages)
 * `<BEMAN_NAME>_INSTALL_CONFIG_FILE_PACKAGE` - a per-project option to enable/disable config file installation (default: `ON` if the project is top-level, `OFF` otherwise). For instance for `beman.something`, the option would be `BEMAN_SOMETHING_INSTALL_CONFIG_FILE_PACKAGE`.
+
+#### `beman_cmake_instrumentation`
+
+The cmake modules in this library are intended to provide access to CMake instrumentation data in Google Trace format which is visualizable with chrome://tracing and https://ui.perfetto.dev.
+
+Instrumentation may be enabled either by adding to the CMAKE_PROJECT_TOP_LEVEL_INCLUDES
+```sh
+-DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=infra/cmake/bemancmakeinstrumentation.cmake
+```
+or by calling explicitly within the CMakeList.txt file.
+```cmake
+find_package(BemanCMakeInstrumentation)
+configure_beman_cmake_instrumentation()
+```
+
+In either form, CMake will call `instrumentation.sh` which will copy the trace data in json format into a `.trace` subdirectory within the build directory.
+
+Multiple calls to `configure_beman_cmake_instrumentation` will only configure the callback hooks once, so it is safe to include multiple times, including by TOP_LEVEL_INCLUDE.
