@@ -36,7 +36,7 @@ jobs:
           - {name: "Ubuntu GCC 12", tag: "gcc:12", toolchain: "gcc-12",  cmake_args: "-G \"Ninja Multi-Config\" -DCMAKE_CONFIGURATION_TYPES=\"RelWithDebInfo;Asan\"  	-DCMAKE_PREFIX_PATH=\"./infra/cmake\" "}
     steps:
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e # v2.14.2
+        uses: step-security/harden-runner@a90bcbc6539c36a85cdfeb73f7e2f433735f215b # v2.15.0
         with:
           egress-policy: audit
 
@@ -113,7 +113,7 @@ jobs:
           cmake --build .build --config Gcov --target process_coverage -- -k 0
       - name: Coveralls
         if: matrix.config.coverage
-        uses: coverallsapp/github-action@ba6dae83310bbd6d33ff77092650dc40bd444a2a # main
+        uses: coverallsapp/github-action@0a51d2e0b5417d06e4ecceb534aec87defc53926 # main
         with:
           file: .build/coverage.json
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -128,7 +128,7 @@ jobs:
     steps:
       # See https://github.com/cli/cli/issues/5075
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e # v2.14.2
+        uses: step-security/harden-runner@a90bcbc6539c36a85cdfeb73f7e2f433735f215b # v2.15.0
         with:
           egress-policy: audit
 
