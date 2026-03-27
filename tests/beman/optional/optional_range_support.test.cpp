@@ -436,3 +436,17 @@ TEST(RangeSupportTest, PythagoreanTriples) {
     EXPECT_TRUE(constify(lambda()));
     EXPECT_TRUE(lambda());
 }
+
+TEST(RangeSupportTest, NullOpt) {
+    beman::optional::nullopt_t t1{beman::optional::nullopt_t::Tag::tag};
+    beman::optional::nullopt_t t2{beman::optional::nullopt_t::Tag::tag};
+    EXPECT_EQ(t1, t2);
+    EXPECT_LE(t1, t2);
+    EXPECT_LE(t2, t1);
+    EXPECT_EQ(t1, beman::optional::nullopt);
+}
+
+TEST(RangeSupportTest, FindNullopt) {
+    std::vector<beman::optional::optional<int>> v;
+    std::ranges::find(v, beman::optional::nullopt);
+}

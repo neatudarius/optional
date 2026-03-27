@@ -122,6 +122,13 @@ struct nullopt_t {
      * @details constexpr for nullopt_t to be literal.
      */
     explicit constexpr nullopt_t(Tag) noexcept {}
+
+  private:
+    friend constexpr bool operator==(nullopt_t, nullopt_t) noexcept { return true; }
+
+    friend constexpr std::strong_ordering operator<=>(nullopt_t, nullopt_t) noexcept {
+        return std::strong_ordering::equivalent;
+    }
 };
 
 /// Tag to disengage optional objects.
