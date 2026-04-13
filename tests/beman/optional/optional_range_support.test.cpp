@@ -448,5 +448,9 @@ TEST(RangeSupportTest, NullOpt) {
 
 TEST(RangeSupportTest, FindNullopt) {
     std::vector<beman::optional::optional<int>> v;
-    std::ranges::find(v, beman::optional::nullopt);
+
+    auto i = std::ranges::find(v, beman::optional::nullopt);
+
+    EXPECT_EQ(i, std::ranges::end(v));
+
 }
