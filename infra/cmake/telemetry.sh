@@ -29,7 +29,7 @@ _ME="$(basename "${0}")"
 _print_help() {
     cat <<HEREDOC
 
-Callback script to process CMake Instrumentation data
+Callback script to process CMake Insrumentation data
 https://cmake.org/cmake/help/latest/command/cmake_instrumentation.html
 
 Usage:
@@ -38,6 +38,9 @@ Usage:
 
 Options:
   -h --help  Show this screen.
+
+Environment:
+  Setting DEBUG_TELEMETRY in the environment will enable DEBUG logging
 HEREDOC
 }
 
@@ -45,7 +48,7 @@ HEREDOC
 # Program Functions
 ###############################################################################
 _debug_print() {
-    if [[ -n "${DEBUG:-}" ]]; then
+    if [[ -n "${DEBUG_TELEMETRY:-}" ]]; then
         printf "[DEBUG] $(date +'%H:%M:%S'): %s \n" "$1" >&2
     fi
 }
